@@ -14,6 +14,7 @@
     "dev-server": "webpack-dev-server --env.env=development"
   },
   "dependencies": {
+    "gsap": "^3.5.1",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
