@@ -20,7 +20,8 @@
     "react-dom": "^16.13.0",
     "react-inlinesvg": "^1.2.0",
     "react-is": "^16.13.1",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.0.1",
+    "three": "^0.120.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

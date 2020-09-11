@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import styled from 'styled-components';
 
-const App = () => (
-  <React.Fragment>
-    <h1>React Boilerplate</h1>
-    <h2>By Black Jelly</h2>
-  </React.Fragment>
-);
+import useAnim from '../hooks/useAnim';
+
+const Canvas = styled.canvas``;
+
+const App = () => {
+  const canvasRef = useRef();
+
+  useAnim(canvasRef);
+
+  return <Canvas ref={canvasRef} />;
+};
 
 export default App;
