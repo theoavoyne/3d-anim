@@ -12,7 +12,7 @@ import createRock from '../animation/objects/createRock';
 import createScene from '../animation/objects/createScene';
 import makeProminence from '../animation/functions/makeProminence';
 import resetAllVertices from '../animation/functions/resetAllVertices';
-import updateSphereRotation from '../animation/functions/updateSphereRotation';
+import updateRockRotation from '../animation/functions/updateRockRotation';
 
 export default (canvasRef) => {
   useEffect(() => {
@@ -34,7 +34,7 @@ export default (canvasRef) => {
       const timeDelta = time - prevTime;
       prevTime = time;
       renderer.render(scene, camera);
-      updateSphereRotation(rock, rockRotationDeltas, timeDelta);
+      updateRockRotation(rock, rockRotationDeltas, timeDelta);
       requestAnimationFrame(animate);
     };
 
