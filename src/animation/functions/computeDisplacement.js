@@ -1,6 +1,4 @@
-/* eslint-disable no-param-reassign */
-
-export default (vertex, dist, inPlace = true) => {
+export default (vertex, dist) => {
   const newPos = {};
   const { x: oldX, y: oldY, z: oldZ } = vertex;
 
@@ -14,8 +12,6 @@ export default (vertex, dist, inPlace = true) => {
     newPos.y = oldY + dist;
     newPos.z = oldZ;
   }
-
-  if (inPlace) { Object.assign(vertex, newPos); }
 
   return newPos;
 };

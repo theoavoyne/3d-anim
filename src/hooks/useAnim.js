@@ -2,12 +2,12 @@ import { gsap } from 'gsap';
 import pick from 'lodash.pick';
 import { useEffect } from 'react';
 
-import camera from '../animation/camera';
-import createRenderer from '../animation/createRenderer';
-import displaceVertex from '../animation/displaceVertex';
-import light from '../animation/light';
-import rock from '../animation/rock';
-import scene from '../animation/scene';
+import camera from '../animation/objects/camera';
+import computeDisplacement from '../animation/functions/computeDisplacement';
+import createRenderer from '../animation/objects/createRenderer';
+import light from '../animation/objects/light';
+import rock from '../animation/objects/rock';
+import scene from '../animation/objects/scene';
 
 export default (canvasRef) => {
   useEffect(() => {
@@ -52,7 +52,7 @@ export default (canvasRef) => {
             vertexIndexes.forEach((index) => {
               animatedVertices[index] = true;
               const vertex = rock.geometry.vertices[index];
-              const newPos = displaceVertex(vertex, randDist, false);
+              const newPos = computeDisplacement(vertex, randDist);
               gsap.to(vertex, {
                 duration: 1,
                 onComplete: () => { animatedVertices[index] = false; },

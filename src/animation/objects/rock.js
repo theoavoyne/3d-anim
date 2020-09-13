@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-
 import {
   FaceColors,
   Mesh,
@@ -7,7 +5,7 @@ import {
   SphereGeometry,
 } from 'three';
 
-import displaceVertex from './displaceVertex';
+import computeDisplacement from '../functions/computeDisplacement';
 
 const heightSegments = 24;
 const radius = 40;
@@ -23,7 +21,8 @@ geometry.faces.forEach((face) => {
 
 geometry.vertices.forEach((vertex) => {
   const randDist = (Math.random() - 0.5) * 5;
-  displaceVertex(vertex, randDist);
+  const newPos = computeDisplacement(vertex, randDist);
+  Object.assign(vertex, newPos);
 });
 
 export default new Mesh(geometry, material);
