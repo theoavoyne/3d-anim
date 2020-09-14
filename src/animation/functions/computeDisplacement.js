@@ -9,7 +9,7 @@ export default (vertex, dist) => {
     newPos.z = ((oldZ * (newPos.x - oldX)) / oldX) + oldZ;
   } else {
     newPos.x = oldX;
-    newPos.y = oldY + dist;
+    newPos.y = oldY + (oldY > 0 ? dist : -dist);
     newPos.z = oldZ;
   }
 
