@@ -1,8 +1,8 @@
-import { gsap } from 'gsap';
+import { Expo, gsap, Power1 } from 'gsap';
 
-const scaleMax = 1.25;
+const scaleMax = 1.45;
 const scaleMin = 1;
-const tweenDurationDown = 0.25;
+const tweenDurationDown = 3;
 const tweenDurationUp = 6;
 
 export default (rock) => {
@@ -13,7 +13,7 @@ export default (rock) => {
     tween = gsap.to(rock.scale, {
       duration: tweenDurationUp
         * ((scaleMax - rock.scale.x) / (scaleMax - scaleMin)),
-      ease: 'none',
+      ease: Power1.easeOut,
       onComplete: () => { tween = undefined; },
       x: scaleMax,
       y: scaleMax,
@@ -26,7 +26,7 @@ export default (rock) => {
     tween = gsap.to(rock.scale, {
       duration: tweenDurationDown
         * ((rock.scale.x - scaleMin) / (scaleMax - scaleMin)),
-      ease: 'none',
+      ease: Expo.easeOut,
       onComplete: () => { tween = undefined; },
       x: scaleMin,
       y: scaleMin,

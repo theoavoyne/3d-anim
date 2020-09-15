@@ -7,7 +7,7 @@ const delta = Math.PI / 5;
 const speedMax = 2;
 const speedMin = 1;
 const tweenDurationDown = 0.25;
-const tweenDurationUp = 6;
+const tweenDurationUp = 1;
 
 export default (rock) => {
   const point = { x: 1, y: 1 };

@@ -8,10 +8,10 @@ import {
 
 import computeDisplacement from '../functions/computeDisplacement';
 
-const heightSegments = 24;
-const radius = 40;
+const heightSegments = 34;
+const radius = 39;
 const vertexColors = FaceColors;
-const widthSegments = 24;
+const widthSegments = 34;
 
 export default () => {
   const geometry = new SphereGeometry(radius, widthSegments, heightSegments);

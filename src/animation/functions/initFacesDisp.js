@@ -5,7 +5,7 @@ import pick from 'lodash.pick';
 
 import computeDisplacement from './computeDisplacement';
 
-const maxDisplacementDistance = 15;
+const maxDisplacementDistance = 10;
 const tweenDurationDown = 0.25;
 const tweenDurationUp = 0.25;
 
