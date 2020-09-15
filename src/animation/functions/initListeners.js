@@ -2,6 +2,8 @@
 
 import { Vector2 } from 'three';
 
+const touchDevice = 'ontouchstart' in window;
+
 export default ({ camera, MD, MM, MU, raycaster, scene }) => {
   let mouseDown = false;
 
@@ -17,28 +19,62 @@ export default ({ camera, MD, MM, MU, raycaster, scene }) => {
 
   const onMouseDown = (e) => {
     mouseDown = true;
-    const intersect = getIntersect(e.clientX, e.clientY);
+
+    let intersect;
+
+    if (touchDevice) {
+      intersect = getIntersect(e.touches[0].clientX, e.touches[0].clientY);
+      e.preventDefault();
+    } else {
+      intersect = getIntersect(e.clientX, e.clientY);
+    }
+
     MD.forEach((func) => { func(intersect); });
   };
 
   const onMouseMove = (e) => {
-    const intersect = getIntersect(e.clientX, e.clientY);
+    let intersect;
+
+    if (touchDevice) {
+      intersect = getIntersect(e.touches[0].clientX, e.touches[0].clientY);
+    } else {
+      intersect = getIntersect(e.clientX, e.clientY);
+    }
+
     MM.forEach((func) => { func(intersect, mouseDown); });
   };
 
   const onMouseUp = (e) => {
     mouseDown = false;
-    const intersect = getIntersect(e.clientX, e.clientY);
+
+    let intersect;
+
+    if (!touchDevice) {
+      intersect = getIntersect(e.clientX, e.clientY);
+    }
+
     MU.forEach((func) => { func(intersect); });
   };
 
-  window.addEventListener('mousedown', onMouseDown);
-  window.addEventListener('mousemove', onMouseMove);
-  window.addEventListener('mouseup', onMouseUp);
+  if (touchDevice) {
+    window.addEventListener('touchstart', onMouseDown, { passive: false });
+    window.addEventListener('touchmove', onMouseMove);
+    window.addEventListener('touchend', onMouseUp);
+  } else {
+    window.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+  }
 
   return () => {
-    window.removeEventListener('mousedown', onMouseDown);
-    window.removeEventListener('mousemove', onMouseMove);
-    window.removeEventListener('mouseup', onMouseUp);
+    if (touchDevice) {
+      window.removeEventListener('touchstart', onMouseDown);
+      window.removeEventListener('touchmove', onMouseMove);
+      window.removeEventListener('touchend', onMouseUp);
+    } else {
+      window.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+    }
   };
 };
