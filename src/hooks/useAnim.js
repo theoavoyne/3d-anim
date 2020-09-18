@@ -11,6 +11,7 @@ import createRock from '../animation/objects/createRock';
 import createScene from '../animation/objects/createScene';
 import initFacesDisp from '../animation/functions/initFacesDisp';
 import initListeners from '../animation/functions/initListeners';
+import initParticlesMovement from '../animation/functions/initParticlesMovement';
 import initRockRotation from '../animation/functions/initRockRotation';
 import initRockScale from '../animation/functions/initRockScale';
 
@@ -32,6 +33,8 @@ export default (canvasRef) => {
       MM: facesDispMM,
       MU: facesDispMU,
     } = initFacesDisp(rock, initialVertices);
+
+    initParticlesMovement(particles);
 
     const {
       MD: rockRotationMD,

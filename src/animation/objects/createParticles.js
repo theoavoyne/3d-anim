@@ -7,12 +7,14 @@ import { radius as rockRadius } from './createRock';
 
 import PointPNG from '../../static/images/point.png';
 
+const maxY = Math.tan((cameraFov / 2) * (Math.PI / 180)) * cameraPosition[2];
+const maxX = maxY * (window.innerWidth / window.innerHeight);
 const particleEvery = 30000;
+
+export { maxX, maxY };
 
 export default () => {
   const count = (window.innerWidth * window.innerHeight) / particleEvery;
-  const maxY = Math.tan((cameraFov / 2) * (Math.PI / 180)) * cameraPosition[2];
-  const maxX = maxY * (window.innerWidth / window.innerHeight);
 
   const material = new SpriteMaterial({
     map: new TextureLoader().load(PointPNG),
