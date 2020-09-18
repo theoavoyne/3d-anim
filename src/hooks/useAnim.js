@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 import createCamera from '../animation/objects/createCamera';
 import createLight from '../animation/objects/createLight';
+import createParticles from '../animation/objects/createParticles';
 import createRaycaster from '../animation/objects/createRaycaster';
 import createRenderer from '../animation/objects/createRenderer';
 import createRock from '../animation/objects/createRock';
@@ -17,6 +18,7 @@ export default (canvasRef) => {
   useEffect(() => {
     const camera = createCamera();
     const light = createLight();
+    const particles = createParticles();
     const raycaster = createRaycaster();
     const renderer = createRenderer(canvasRef.current);
     const [rock, initialVertices] = createRock();
@@ -54,6 +56,7 @@ export default (canvasRef) => {
     };
 
     scene.add(light);
+    scene.add(particles);
     scene.add(rock);
 
     animate(0);
