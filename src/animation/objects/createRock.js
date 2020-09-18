@@ -13,8 +13,6 @@ const radius = 39;
 const vertexColors = FaceColors;
 const widthSegments = 34;
 
-export { radius };
-
 export default () => {
   const geometry = new SphereGeometry(radius, widthSegments, heightSegments);
   const material = new MeshPhongMaterial({ vertexColors });

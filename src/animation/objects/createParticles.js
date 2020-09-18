@@ -3,13 +3,18 @@
 import { Group, Sprite, SpriteMaterial, TextureLoader } from 'three';
 
 import { fov as cameraFov, position as cameraPosition } from './createCamera';
-import { radius as rockRadius } from './createRock';
 
 import PointPNG from '../../static/images/point.png';
 
-const maxY = Math.tan((cameraFov / 2) * (Math.PI / 180)) * cameraPosition[2];
-const maxX = maxY * (window.innerWidth / window.innerHeight);
 const particleEvery = 30000;
+const particleMaxScale = 8;
+const particlePositionZ = -100;
+
+const maxY = (
+  Math.tan((cameraFov / 2) * (Math.PI / 180))
+  * (cameraPosition[2] + -particlePositionZ)
+);
+const maxX = maxY * (window.innerWidth / window.innerHeight);
 
 export { maxX, maxY };
 
@@ -23,22 +28,11 @@ export default () => {
   const particles = new Group();
 
   for (let i = 0; i < count; i += 1) {
-    let x = 0;
-    let y = 0;
-
-    while (
-      x < rockRadius
-      && x > -rockRadius
-      && y < rockRadius
-      && y > -rockRadius
-    ) {
-      x = (Math.random() * 2 - 1) * maxX;
-      y = (Math.random() * 2 - 1) * maxY;
-    }
-
     const particle = new Sprite(material);
-    particle.position.set(x, y, 0);
-    const scale = Math.random() * 3;
+    const x = (Math.random() * 2 - 1) * maxX;
+    const y = (Math.random() * 2 - 1) * maxY;
+    particle.position.set(x, y, particlePositionZ);
+    const scale = Math.random() * particleMaxScale;
     particle.scale.set(scale, scale, scale);
     particles.add(particle);
   }
