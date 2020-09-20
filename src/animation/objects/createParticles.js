@@ -7,9 +7,10 @@ import { maxAngle as cameraMaxAngle } from '../functions/initCameraRotation';
 
 import PointPNG from '../../static/images/point.png';
 
-const particleEvery = 1500;
+const particleEvery = 1200;
 const particleMaxScale = 5;
 const particlePosZ = -200;
+const yIntercept = 20;
 
 // CAMERA FOV
 const cameraFovVRad = cameraFov * (Math.PI / 180);
@@ -31,7 +32,7 @@ const maxY = Math.tan(cameraFovVRad / 2) * (cameraPosition[2] + -particlePosZ);
 export { maxX, maxY };
 
 export default () => {
-  const count = (maxX * maxY) / particleEvery;
+  const count = (maxX * maxY) / particleEvery + yIntercept;
 
   const material = new SpriteMaterial({
     map: new TextureLoader().load(PointPNG),
