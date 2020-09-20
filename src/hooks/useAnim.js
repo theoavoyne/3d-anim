@@ -9,6 +9,7 @@ import createRaycaster from '../animation/objects/createRaycaster';
 import createRenderer from '../animation/objects/createRenderer';
 import createRock from '../animation/objects/createRock';
 import createScene from '../animation/objects/createScene';
+import initCameraRotation from '../animation/functions/initCameraRotation';
 import initFacesDisp from '../animation/functions/initFacesDisp';
 import initListeners from '../animation/functions/initListeners';
 import initParticlesMovement from '../animation/functions/initParticlesMovement';
@@ -27,6 +28,8 @@ export default (canvasRef) => {
 
     let didCancel = false;
     let prevTime = 0;
+
+    const { MM: cameraRotationMM } = initCameraRotation(camera);
 
     const {
       MD: facesDispMD,
@@ -67,7 +70,7 @@ export default (canvasRef) => {
     const listenersCleanUp = initListeners({
       camera,
       MD: [facesDispMD, rockRotationMD, rockScaleMD],
-      MM: [facesDispMM, rockRotationMM],
+      MM: [cameraRotationMM, facesDispMM, rockRotationMM],
       MU: [facesDispMU, rockRotationMU, rockScaleMU],
       raycaster,
       scene,

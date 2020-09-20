@@ -3,23 +3,35 @@
 import { Group, Sprite, SpriteMaterial, TextureLoader } from 'three';
 
 import { fov as cameraFov, position as cameraPosition } from './createCamera';
+import { maxAngle as cameraMaxAngle } from '../functions/initCameraRotation';
 
 import PointPNG from '../../static/images/point.png';
 
-const particleEvery = 30000;
-const particleMaxScale = 8;
-const particlePositionZ = -100;
+const particleEvery = 1500;
+const particleMaxScale = 5;
+const particlePosZ = -200;
 
-const maxY = (
-  Math.tan((cameraFov / 2) * (Math.PI / 180))
-  * (cameraPosition[2] + -particlePositionZ)
-);
-const maxX = maxY * (window.innerWidth / window.innerHeight);
+// CAMERA FOV
+const cameraFovVRad = cameraFov * (Math.PI / 180);
+const cameraFovHRad = cameraFovVRad * (window.innerWidth / window.innerHeight);
+
+// CAMERA MAX X/Z
+const cameraMaxX = Math.sin(cameraMaxAngle) * cameraPosition[2];
+const cameraMaxZ = Math.sqrt(cameraPosition[2] ** 2 - cameraMaxX ** 2);
+
+// SEE "EUREKA" PAPER (BA2)
+const maxAngleBAC = 85 * (Math.PI / 180); // Fallback for very wide screens
+const angleOAC = cameraFovHRad / 2;
+const angleBAC = Math.min(angleOAC + cameraMaxAngle, maxAngleBAC);
+const BC = Math.tan(angleBAC) * (cameraMaxZ + -particlePosZ);
+
+const maxX = BC - cameraMaxX;
+const maxY = Math.tan(cameraFovVRad / 2) * (cameraPosition[2] + -particlePosZ);
 
 export { maxX, maxY };
 
 export default () => {
-  const count = (window.innerWidth * window.innerHeight) / particleEvery;
+  const count = (maxX * maxY) / particleEvery;
 
   const material = new SpriteMaterial({
     map: new TextureLoader().load(PointPNG),
@@ -31,7 +43,7 @@ export default () => {
     const particle = new Sprite(material);
     const x = (Math.random() * 2 - 1) * maxX;
     const y = (Math.random() * 2 - 1) * maxY;
-    particle.position.set(x, y, particlePositionZ);
+    particle.position.set(x, y, particlePosZ);
     const scale = Math.random() * particleMaxScale;
     particle.scale.set(scale, scale, scale);
     particles.add(particle);

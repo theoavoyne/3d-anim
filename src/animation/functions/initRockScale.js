@@ -1,6 +1,6 @@
 import { Expo, gsap, Power1 } from 'gsap';
 
-const scaleMax = 1.45;
+const scaleMax = 1.6;
 const scaleMin = 1;
 const tweenDurationDown = 3;
 const tweenDurationUp = 6;

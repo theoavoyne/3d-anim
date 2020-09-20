@@ -8,10 +8,10 @@ import {
 
 import computeDisplacement from '../functions/computeDisplacement';
 
-const heightSegments = 34;
+const heightSegments = 28;
 const radius = 39;
 const vertexColors = FaceColors;
-const widthSegments = 34;
+const widthSegments = 28;
 
 export default () => {
   const geometry = new SphereGeometry(radius, widthSegments, heightSegments);
@@ -22,7 +22,7 @@ export default () => {
   });
 
   geometry.vertices.forEach((vertex) => {
-    const randDist = (Math.random() - 0.5) * 5;
+    const randDist = (Math.random() - 0.5) * 6;
     const newPos = computeDisplacement(vertex, randDist);
     Object.assign(vertex, newPos);
   });

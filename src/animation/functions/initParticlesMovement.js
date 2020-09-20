@@ -5,7 +5,7 @@ import { Vector3 } from 'three';
 
 import { maxX, maxY } from '../objects/createParticles';
 
-const distance = 60;
+const distance = 100;
 const durationMax = 30;
 const durationMin = 5;
 

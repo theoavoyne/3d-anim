@@ -29,7 +29,7 @@ export default ({ camera, MD, MM, MU, raycaster, scene }) => {
       intersect = getIntersect(e.clientX, e.clientY);
     }
 
-    MD.forEach((func) => { func(intersect); });
+    MD.forEach((func) => { func(intersect, e); });
   };
 
   const onMouseMove = (e) => {
@@ -41,7 +41,7 @@ export default ({ camera, MD, MM, MU, raycaster, scene }) => {
       intersect = getIntersect(e.clientX, e.clientY);
     }
 
-    MM.forEach((func) => { func(intersect, mouseDown); });
+    MM.forEach((func) => { func(intersect, mouseDown, e); });
   };
 
   const onMouseUp = (e) => {
@@ -53,7 +53,7 @@ export default ({ camera, MD, MM, MU, raycaster, scene }) => {
       intersect = getIntersect(e.clientX, e.clientY);
     }
 
-    MU.forEach((func) => { func(intersect); });
+    MU.forEach((func) => { func(intersect, e); });
   };
 
   if (touchDevice) {
