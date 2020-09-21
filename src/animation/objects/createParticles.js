@@ -5,7 +5,9 @@ import { Group, Sprite, SpriteMaterial, TextureLoader } from 'three';
 import { fov as cameraFov, position as cameraPosition } from './createCamera';
 import { maxAngle as cameraMaxAngle } from '../functions/initCameraRotation';
 
-import PointPNG from '../../static/images/point.png';
+import Particle50PNG from '../../static/images/50.png';
+import Particle70PNG from '../../static/images/70.png';
+import Particle100PNG from '../../static/images/100.png';
 
 const particleEvery = 1200;
 const particleMaxScale = 5;
@@ -32,16 +34,20 @@ const maxY = Math.tan(cameraFovVRad / 2) * (cameraPosition[2] + -particlePosZ);
 export { maxX, maxY };
 
 export default () => {
-  const count = (maxX * maxY) / particleEvery + yIntercept;
+  const images = [Particle50PNG, Particle70PNG, Particle100PNG];
 
-  const material = new SpriteMaterial({
-    map: new TextureLoader().load(PointPNG),
-  });
+  const textureLoader = new TextureLoader();
+
+  const materials = images.map((image) => (
+    new SpriteMaterial({ map: textureLoader.load(image) })
+  ));
+
+  const count = (maxX * maxY) / particleEvery + yIntercept;
 
   const particles = new Group();
 
   for (let i = 0; i < count; i += 1) {
-    const particle = new Sprite(material);
+    const particle = new Sprite(materials[i % materials.length]);
     const x = (Math.random() * 2 - 1) * maxX;
     const y = (Math.random() * 2 - 1) * maxY;
     particle.position.set(x, y, particlePosZ);
