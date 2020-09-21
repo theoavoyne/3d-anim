@@ -13,10 +13,11 @@ import initCameraRotation from '../animation/functions/initCameraRotation';
 import initFacesDisp from '../animation/functions/initFacesDisp';
 import initListeners from '../animation/functions/initListeners';
 import initParticlesMovement from '../animation/functions/initParticlesMovement';
+import initProgress from '../animation/functions/initProgress';
 import initRockRotation from '../animation/functions/initRockRotation';
 import initRockScale from '../animation/functions/initRockScale';
 
-export default (canvasRef) => {
+export default (canvasRef, setPercent) => {
   useEffect(() => {
     const camera = createCamera();
     const light = createLight();
@@ -38,6 +39,11 @@ export default (canvasRef) => {
     } = initFacesDisp(rock, initialVertices);
 
     initParticlesMovement(particles);
+
+    const {
+      MD: progressMD,
+      MU: progressMU,
+    } = initProgress(setPercent);
 
     const {
       MD: rockRotationMD,
@@ -69,9 +75,9 @@ export default (canvasRef) => {
 
     const listenersCleanUp = initListeners({
       camera,
-      MD: [facesDispMD, rockRotationMD, rockScaleMD],
+      MD: [facesDispMD, progressMD, rockRotationMD, rockScaleMD],
       MM: [cameraRotationMM, facesDispMM, rockRotationMM],
-      MU: [facesDispMU, rockRotationMU, rockScaleMU],
+      MU: [facesDispMU, progressMU, rockRotationMU, rockScaleMU],
       raycaster,
       scene,
     });
