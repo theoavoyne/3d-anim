@@ -1,4 +1,4 @@
-import { gsap } from 'gsap';
+import { Expo, gsap } from 'gsap';
 
 const tweenDurationDown = 3;
 const tweenDurationUp = 6;
@@ -23,7 +23,7 @@ export default (setPercent) => {
     tween = gsap.to(progress, {
       current: 0,
       duration: tweenDurationDown * (progress.current / 100),
-      ease: 'none',
+      ease: Expo.easeOut,
       onComplete: () => { tween = undefined; },
       onUpdate: () => { setPercent(progress.current); },
     });

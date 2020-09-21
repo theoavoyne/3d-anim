@@ -16,7 +16,7 @@ const Percent = styled.div.attrs(({ percent }) => ({
   font-family: base-mono-wide;
   font-size: 1.25rem;
   font-weight: 300;
-  opacity: ${({ percent }) => (percent > 0 ? 1 : 0)};
+  opacity: ${({ percent }) => (Math.floor(percent) > 0 ? 1 : 0)};
   position: absolute;
   top: -.5rem;
   transform: translate(50%, -100%);
