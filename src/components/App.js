@@ -9,6 +9,19 @@ const Canvas = styled.canvas`
   top: 0;
 `;
 
+const Instruction = styled.div`
+  bottom: 6rem;
+  color: blue;
+  font-family: base-mono-wide;
+  font-size: 1.25rem;
+  font-weight: 300;
+  left: 50%;
+  opacity: ${({ show }) => (show ? 1 : 0)};
+  position: absolute;
+  transform: translateX(-50%);
+  transition: opacity .3s;
+`;
+
 const Percent = styled.div.attrs(({ percent }) => ({
   style: { right: `${100 - percent}%` },
 }))`
@@ -47,13 +60,14 @@ const ProgressBarContainer = styled.div`
 const App = () => {
   const canvasRef = useRef();
 
-  const [percent, setPercent] = useState();
+  const [percent, setPercent] = useState(0);
 
   useAnim(canvasRef, setPercent);
 
   return (
     <React.Fragment>
       <Canvas ref={canvasRef} />
+      <Instruction show={percent < 1}>Tap and hold</Instruction>
       <ProgressBarContainer>
         <ProgressBar percent={percent} />
         <Percent percent={percent}>{Math.floor(percent)}%</Percent>
