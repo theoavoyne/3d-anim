@@ -1,4 +1,4 @@
-/* eslint-disable object-curly-newline */
+/* eslint-disable object-curly-newline, no-param-reassign */
 
 import { gsap } from 'gsap';
 import { Vector3 } from 'three';
@@ -18,6 +18,7 @@ export default (rock) => {
     const { x, y } = point;
     const angle = speed.current * delta * (timeDelta / 1000);
     const axis = new Vector3(y, -x, 0).normalize();
+    rock.userData.rotationAxis = axis;
     rock.rotateOnWorldAxis(axis, angle);
   };
 

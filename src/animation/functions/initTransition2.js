@@ -2,7 +2,7 @@ import { Expo, gsap } from 'gsap';
 
 const distanceMax = 300;
 const distanceMin = 100;
-const tweenDuration = 2;
+const tweenDuration = 6;
 
 export default (args) => {
   const {
@@ -39,7 +39,8 @@ export default (args) => {
       );
     });
 
-    // PREPARING NEW SCENE
+    fragments.userData.rotationAxis = rock.userData.rotationAxis;
+
     scene.add(door);
     scene.add(fragments);
     scene.remove(particles);
