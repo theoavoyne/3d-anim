@@ -3,6 +3,25 @@ import styled from 'styled-components';
 
 import useAnim from '../hooks/useAnim';
 
+const Button = styled.button.attrs(() => ({
+  type: 'button',
+}))`
+  background: none;
+  bottom: 6rem;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  font-family: base-mono-wide;
+  font-size: 1.25rem;
+  font-weight: 300;
+  left: 50%;
+  padding: none;
+  position: absolute;
+  text-decoration: underline;
+  transform: translateX(-50%);
+  white-space: nowrap;
+`;
+
 const Canvas = styled.canvas`
   left: 0;
   position: absolute;
@@ -77,6 +96,7 @@ const App = () => {
           </ProgressBarContainer>
         </React.Fragment>
       )}
+      {step === 2 && <Button>Enter the website</Button>}
     </React.Fragment>
   );
 };

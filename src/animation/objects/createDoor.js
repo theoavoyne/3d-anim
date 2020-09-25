@@ -1,12 +1,12 @@
 import { Sprite, SpriteMaterial, TextureLoader } from 'three';
 
-import Particle100PNG from '../../static/images/100.png';
+import DoorPNG from '../../static/images/door.png';
 
-const scale = 78;
+const scale = 156;
 
 export default () => {
   const material = new SpriteMaterial({
-    map: new TextureLoader().load(Particle100PNG),
+    map: new TextureLoader().load(DoorPNG),
   });
 
   const door = new Sprite(material);
