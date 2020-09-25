@@ -1,15 +1,8 @@
 import { Expo, gsap } from 'gsap';
 
-import {
-  fov as cameraFov,
-  position as cameraPosition,
-} from '../objects/createCamera';
-
-const distanceMaxRatio = 1.25;
-const distanceMinRatio = 0.5;
+const distanceMax = 300;
+const distanceMin = 100;
 const tweenDuration = 2;
-
-const cameraFovRad = cameraFov * (Math.PI / 180);
 
 export default (args) => {
   const {
@@ -27,19 +20,7 @@ export default (args) => {
     const fromDistance = rock.geometry.parameters.radius * rock.scale.x;
 
     fragments.children.forEach((fragment) => {
-      // TRANSLATION DISTANCE COMPUTATION
-      const aspect = window.innerWidth / window.innerHeight;
-      const baseDistance = (
-        Math.tan(Math.max(cameraFovRad, cameraFovRad * aspect) / 2)
-        * cameraPosition[2]
-      );
-      const distance = (
-        Math.random()
-        * (baseDistance * (distanceMaxRatio - distanceMinRatio))
-        + baseDistance * distanceMinRatio
-      );
-
-      // TRANSLATION
+      const distance = Math.random() * (distanceMax - distanceMin) + distanceMin;
       const { translationAxis } = fragment.userData;
       gsap.fromTo(
         fragment.position,
