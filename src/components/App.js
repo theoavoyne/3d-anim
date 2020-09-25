@@ -61,17 +61,22 @@ const App = () => {
   const canvasRef = useRef();
 
   const [percent, setPercent] = useState(0);
+  const [step, setStep] = useState(1);
 
-  useAnim(canvasRef, setPercent);
+  useAnim(canvasRef, setPercent, setStep);
 
   return (
     <React.Fragment>
       <Canvas ref={canvasRef} />
-      <Instruction show={percent < 1}>Tap and hold</Instruction>
-      <ProgressBarContainer>
-        <ProgressBar percent={percent} />
-        <Percent percent={percent}>{Math.floor(percent)}%</Percent>
-      </ProgressBarContainer>
+      {step === 1 && (
+        <React.Fragment>
+          <Instruction show={percent < 1}>Tap and hold</Instruction>
+          <ProgressBarContainer>
+            <ProgressBar percent={percent} />
+            <Percent percent={percent}>{Math.floor(percent)}%</Percent>
+          </ProgressBarContainer>
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };

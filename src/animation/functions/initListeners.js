@@ -4,7 +4,7 @@ import { Vector2 } from 'three';
 
 const touchDevice = 'ontouchstart' in window;
 
-export default ({ camera, MD, MM, MU, raycaster, scene }) => {
+export default ({ camera, handlers, raycaster, scene }) => {
   let mouseDown = false;
 
   const getIntersect = (clientX, clientY) => {
@@ -29,7 +29,7 @@ export default ({ camera, MD, MM, MU, raycaster, scene }) => {
       intersect = getIntersect(e.clientX, e.clientY);
     }
 
-    MD.forEach((func) => { func(intersect, e); });
+    handlers.MD.forEach((func) => { func(intersect, e); });
   };
 
   const onMouseMove = (e) => {
@@ -41,7 +41,7 @@ export default ({ camera, MD, MM, MU, raycaster, scene }) => {
       intersect = getIntersect(e.clientX, e.clientY);
     }
 
-    MM.forEach((func) => { func(intersect, mouseDown, e); });
+    handlers.MM.forEach((func) => { func(intersect, mouseDown, e); });
   };
 
   const onMouseUp = (e) => {
@@ -53,7 +53,7 @@ export default ({ camera, MD, MM, MU, raycaster, scene }) => {
       intersect = getIntersect(e.clientX, e.clientY);
     }
 
-    MU.forEach((func) => { func(intersect, e); });
+    handlers.MU.forEach((func) => { func(intersect, e); });
   };
 
   if (touchDevice) {
