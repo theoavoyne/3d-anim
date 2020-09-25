@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 
 import createCamera from '../animation/objects/createCamera';
+import createDoor from '../animation/objects/createDoor';
 import createFragments from '../animation/objects/createFragments';
 import createLight from '../animation/objects/createLight';
 import createParticles from '../animation/objects/createParticles';
@@ -23,6 +24,7 @@ import initTransition2 from '../animation/functions/initTransition2';
 export default (canvasRef, setPercent, setStep) => {
   useEffect(() => {
     const camera = createCamera();
+    const door = createDoor();
     const fragments = createFragments();
     const light = createLight();
     const particles = createParticles();
@@ -75,6 +77,7 @@ export default (canvasRef, setPercent, setStep) => {
     };
 
     transition2Ref.current = initTransition2({
+      door,
       fragments,
       handlers,
       newHandlers: {

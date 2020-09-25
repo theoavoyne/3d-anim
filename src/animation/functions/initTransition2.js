@@ -13,6 +13,7 @@ const cameraFovRad = cameraFov * (Math.PI / 180);
 
 export default (args) => {
   const {
+    door,
     fragments,
     handlers,
     newHandlers,
@@ -58,6 +59,7 @@ export default (args) => {
     });
 
     // PREPARING NEW SCENE
+    scene.add(door);
     scene.add(fragments);
     scene.remove(particles);
     scene.remove(rock);
