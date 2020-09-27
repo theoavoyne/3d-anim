@@ -5,6 +5,8 @@ import { position as cameraPosition } from '../objects/createCamera';
 const tweenDelay = 1;
 const tweenDuration = 2;
 
+export const wait = tweenDelay + tweenDuration;
+
 export default (args) => {
   const {
     cameraRotationMM,

@@ -1,7 +1,13 @@
 import React, { useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
+import { wait as t1Wait } from '../animation/functions/initTransition1';
 import useAnim from '../hooks/useAnim';
+
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
 
 const Canvas = styled.canvas`
   left: 0;
@@ -10,6 +16,10 @@ const Canvas = styled.canvas`
 `;
 
 const Instruction = styled.div`
+  animation-delay: ${t1Wait}s;
+  animation-duration: .3s;
+  animation-fill-mode: backwards;
+  animation-name: ${fadeIn};
   bottom: 6rem;
   color: blue;
   font-family: base-mono-wide;
@@ -67,6 +77,10 @@ const ProgressBar = styled.div.attrs(({ percent }) => ({
 `;
 
 const ProgressBarContainer = styled.div`
+  animation-delay: ${t1Wait}s;
+  animation-duration: .3s;
+  animation-fill-mode: backwards;
+  animation-name: ${fadeIn};
   background: #E0E0E0;
   bottom: 3rem;
   height: 4px;
