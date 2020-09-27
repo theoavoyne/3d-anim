@@ -19,10 +19,19 @@ import initParticlesMovement from '../animation/functions/initParticlesMovement'
 import initProgress from '../animation/functions/initProgress';
 import initRockRotation from '../animation/functions/initRockRotation';
 import initRockScale from '../animation/functions/initRockScale';
+import initTransition1 from '../animation/functions/initTransition1';
 import initTransition2 from '../animation/functions/initTransition2';
 import initTransition3 from '../animation/functions/initTransition3';
 
-export default (canvasRef, onClickRef, setPercent, setStep) => {
+export default (...args) => {
+  const [
+    canvasRef,
+    onClickBeginRef,
+    onClickExitRef,
+    setPercent,
+    setStep,
+  ] = args;
+
   useEffect(() => {
     const camera = createCamera();
     const door = createDoor();
@@ -35,6 +44,7 @@ export default (canvasRef, onClickRef, setPercent, setStep) => {
     const scene = createScene();
 
     const didCancelRef = { current: false };
+    const handlers = { MD: [], MM: [], MU: [], updaters: [] };
     const transition2Ref = {};
 
     // EVENT HANDLERS & UPDATERS
@@ -72,13 +82,6 @@ export default (canvasRef, onClickRef, setPercent, setStep) => {
       MU: rockScaleMU,
     } = initRockScale(rock);
 
-    const handlers = {
-      MD: [facesDispMD, progressMD, rockRotationMD, rockScaleMD],
-      MM: [cameraRotationMM, facesDispMM, rockRotationMM],
-      MU: [facesDispMU, progressMU, rockRotationMU, rockScaleMU],
-      updaters: [updateRockRotation],
-    };
-
     // EVENT LISTENERS
 
     const listenersCleanUp = initListeners({
@@ -90,6 +93,27 @@ export default (canvasRef, onClickRef, setPercent, setStep) => {
     });
 
     // TRANSITIONS
+
+    const transition1 = initTransition1({
+      cameraRotationMM,
+      facesDispMD,
+      facesDispMM,
+      facesDispMU,
+      handlers,
+      light,
+      particles,
+      progressMD,
+      progressMU,
+      rock,
+      rockRotationMD,
+      rockRotationMM,
+      rockRotationMU,
+      rockScaleMD,
+      rockScaleMU,
+      scene,
+      setStep,
+      updateRockRotation,
+    });
 
     transition2Ref.current = initTransition2({
       cameraRotationMM,
@@ -116,7 +140,8 @@ export default (canvasRef, onClickRef, setPercent, setStep) => {
       setStep,
     });
 
-    onClickRef.current = transition3;
+    onClickBeginRef.current = transition1;
+    onClickExitRef.current = transition3;
 
     // ANIMATE
 
@@ -133,11 +158,5 @@ export default (canvasRef, onClickRef, setPercent, setStep) => {
     };
 
     animate(0);
-
-    // INSIDE transition1 SOON
-
-    scene.add(light);
-    scene.add(particles);
-    scene.add(rock);
   }, []);
 };

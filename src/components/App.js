@@ -3,26 +3,6 @@ import styled from 'styled-components';
 
 import useAnim from '../hooks/useAnim';
 
-const Button = styled.button.attrs(() => ({
-  type: 'button',
-}))`
-  background: none;
-  bottom: 6rem;
-  border: none;
-  color: blue;
-  cursor: pointer;
-  font-family: base-mono-wide;
-  font-size: 1.25rem;
-  font-weight: 300;
-  left: 50%;
-  padding: none;
-  position: absolute;
-  text-decoration: underline;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  &:focus { outline: none; }
-`;
-
 const Canvas = styled.canvas`
   left: 0;
   position: absolute;
@@ -40,6 +20,26 @@ const Instruction = styled.div`
   position: absolute;
   transform: translateX(-50%);
   transition: opacity .3s;
+`;
+
+const LinkLikeButton = styled.button.attrs(() => ({
+  type: 'button',
+}))`
+  background: none;
+  border: none;
+  bottom: 6rem;
+  color: blue;
+  cursor: pointer;
+  font-family: base-mono-wide;
+  font-size: 1.25rem;
+  font-weight: 300;
+  left: 50%;
+  padding: none;
+  position: absolute;
+  text-decoration: underline;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  &:focus { outline: none; }
 `;
 
 const Percent = styled.div.attrs(({ percent }) => ({
@@ -77,18 +77,44 @@ const ProgressBarContainer = styled.div`
   @media (max-width: 992px) { width: 80vw; }
 `;
 
+const StartButton = styled.button.attrs(() => ({
+  type: 'button',
+}))`
+  background: none;
+  border: 1px solid blue;
+  border-radius: 50%;
+  bottom: 6rem;
+  color: blue;
+  cursor: pointer;
+  font-family: base-mono-wide;
+  font-size: 1.25rem;
+  font-weight: 300;
+  height: 7rem;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+  width: 7rem;
+  &:focus { outline: none; }
+`;
+
 const App = () => {
   const canvasRef = useRef();
-  const onClickRef = useRef();
+  const onClickBeginRef = useRef();
+  const onClickExitRef = useRef();
 
   const [percent, setPercent] = useState(0);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
 
-  useAnim(canvasRef, onClickRef, setPercent, setStep);
+  useAnim(canvasRef, onClickBeginRef, onClickExitRef, setPercent, setStep);
 
   return (
     <React.Fragment>
       <Canvas ref={canvasRef} />
+      {step === 0 && (
+        <StartButton onClick={() => { onClickBeginRef.current(); }}>
+          begin
+        </StartButton>
+      )}
       {step === 1 && (
         <React.Fragment>
           <Instruction show={percent < 1}>Tap and hold</Instruction>
@@ -99,7 +125,9 @@ const App = () => {
         </React.Fragment>
       )}
       {step === 2 && (
-        <Button onClick={onClickRef.current}>Enter the website</Button>
+        <LinkLikeButton onClick={() => { onClickExitRef.current(); }}>
+          Enter the website
+        </LinkLikeButton>
       )}
     </React.Fragment>
   );
