@@ -9,7 +9,7 @@ import {
 import computeDisplacement from '../functions/computeDisplacement';
 
 const heightSegments = 28;
-const radius = 39;
+const radius = 37;
 const vertexColors = FaceColors;
 const widthSegments = 28;
 

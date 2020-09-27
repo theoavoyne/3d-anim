@@ -9,8 +9,8 @@ import Particle50PNG from '../../static/images/50.png';
 import Particle70PNG from '../../static/images/70.png';
 import Particle100PNG from '../../static/images/100.png';
 
-const particleEvery = 1200;
-const particleMaxScale = 5;
+const particleEvery = 1800;
+const particleMaxScale = 8;
 const particlePosZ = -200;
 const yIntercept = 20;
 

@@ -4,7 +4,7 @@ import { gsap } from 'gsap';
 import { Vector3 } from 'three';
 
 const delta = Math.PI / 4;
-const speedMax = 2;
+const speedMax = 2.7;
 const speedMin = 1;
 const tweenDurationDown = 0.25;
 const tweenDurationUp = 1;
