@@ -1,4 +1,4 @@
-/* eslint-disable object-curly-newline */
+/* eslint-disable object-curly-newline, no-param-reassign */
 
 import { useEffect } from 'react';
 
@@ -20,8 +20,9 @@ import initProgress from '../animation/functions/initProgress';
 import initRockRotation from '../animation/functions/initRockRotation';
 import initRockScale from '../animation/functions/initRockScale';
 import initTransition2 from '../animation/functions/initTransition2';
+import initTransition3 from '../animation/functions/initTransition3';
 
-export default (canvasRef, setPercent, setStep) => {
+export default (canvasRef, onClickRef, setPercent, setStep) => {
   useEffect(() => {
     const camera = createCamera();
     const door = createDoor();
@@ -33,12 +34,14 @@ export default (canvasRef, setPercent, setStep) => {
     const [rock, initialVertices] = createRock();
     const scene = createScene();
 
+    const didCancelRef = { current: false };
     const transition2Ref = {};
 
-    let didCancel = false;
-    let prevTime = 0;
+    // EVENT HANDLERS & UPDATERS
 
-    const { MM: cameraRotationMM } = initCameraRotation(camera);
+    const {
+      MM: cameraRotationMM,
+    } = initCameraRotation(camera);
 
     const {
       MD: facesDispMD,
@@ -46,7 +49,11 @@ export default (canvasRef, setPercent, setStep) => {
       MU: facesDispMU,
     } = initFacesDisp(rock, initialVertices);
 
-    initParticlesMovement(particles);
+    const {
+      update: updateFragsRotation,
+    } = initFragsRotation(fragments);
+
+    const particlesMovementCleanUp = initParticlesMovement(particles);
 
     const {
       MD: progressMD,
@@ -65,10 +72,6 @@ export default (canvasRef, setPercent, setStep) => {
       MU: rockScaleMU,
     } = initRockScale(rock);
 
-    const {
-      update: updateFragsRotation,
-    } = initFragsRotation(fragments);
-
     const handlers = {
       MD: [facesDispMD, progressMD, rockRotationMD, rockScaleMD],
       MM: [cameraRotationMM, facesDispMM, rockRotationMM],
@@ -76,24 +79,51 @@ export default (canvasRef, setPercent, setStep) => {
       updaters: [updateRockRotation],
     };
 
+    // EVENT LISTENERS
+
+    const listenersCleanUp = initListeners({
+      camera,
+      canvasRef,
+      handlers,
+      raycaster,
+      scene,
+    });
+
+    // TRANSITIONS
+
     transition2Ref.current = initTransition2({
+      cameraRotationMM,
       door,
       fragments,
       handlers,
-      newHandlers: {
-        MD: [],
-        MM: [cameraRotationMM],
-        MU: [],
-        updaters: [updateFragsRotation],
-      },
       particles,
+      particlesMovementCleanUp,
       rock,
+      scene,
+      setStep,
+      updateFragsRotation,
+    });
+
+    const transition3 = initTransition3({
+      camera,
+      didCancelRef,
+      door,
+      fragments,
+      handlers,
+      light,
+      listenersCleanUp,
       scene,
       setStep,
     });
 
+    onClickRef.current = transition3;
+
+    // ANIMATE
+
+    let prevTime = 0;
+
     const animate = (time) => {
-      if (!didCancel) {
+      if (!didCancelRef.current) {
         const timeDelta = time - prevTime;
         prevTime = time;
         renderer.render(scene, camera);
@@ -102,22 +132,12 @@ export default (canvasRef, setPercent, setStep) => {
       }
     };
 
+    animate(0);
+
+    // INSIDE transition1 SOON
+
     scene.add(light);
     scene.add(particles);
     scene.add(rock);
-
-    animate(0);
-
-    const listenersCleanUp = initListeners({
-      camera,
-      handlers,
-      raycaster,
-      scene,
-    });
-
-    return () => {
-      didCancel = true;
-      listenersCleanUp();
-    };
   }, []);
 };

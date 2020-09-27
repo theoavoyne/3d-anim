@@ -4,7 +4,7 @@ import { Vector2 } from 'three';
 
 const touchDevice = 'ontouchstart' in window;
 
-export default ({ camera, handlers, raycaster, scene }) => {
+export default ({ camera, canvasRef, handlers, raycaster, scene }) => {
   let mouseDown = false;
 
   const getIntersect = (clientX, clientY) => {
@@ -57,24 +57,24 @@ export default ({ camera, handlers, raycaster, scene }) => {
   };
 
   if (touchDevice) {
-    window.addEventListener('touchstart', onMouseDown, { passive: false });
-    window.addEventListener('touchmove', onMouseMove);
-    window.addEventListener('touchend', onMouseUp);
+    canvasRef.current.addEventListener('touchstart', onMouseDown, { passive: false });
+    canvasRef.current.addEventListener('touchmove', onMouseMove);
+    canvasRef.current.addEventListener('touchend', onMouseUp);
   } else {
-    window.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
+    canvasRef.current.addEventListener('mousedown', onMouseDown);
+    canvasRef.current.addEventListener('mousemove', onMouseMove);
+    canvasRef.current.addEventListener('mouseup', onMouseUp);
   }
 
   return () => {
     if (touchDevice) {
-      window.removeEventListener('touchstart', onMouseDown);
-      window.removeEventListener('touchmove', onMouseMove);
-      window.removeEventListener('touchend', onMouseUp);
+      canvasRef.current.removeEventListener('touchstart', onMouseDown);
+      canvasRef.current.removeEventListener('touchmove', onMouseMove);
+      canvasRef.current.removeEventListener('touchend', onMouseUp);
     } else {
-      window.removeEventListener('mousedown', onMouseDown);
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
+      canvasRef.current.removeEventListener('mousedown', onMouseDown);
+      canvasRef.current.removeEventListener('mousemove', onMouseMove);
+      canvasRef.current.removeEventListener('mouseup', onMouseUp);
     }
   };
 };

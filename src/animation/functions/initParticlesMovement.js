@@ -10,6 +10,12 @@ const durationMax = 30;
 const durationMin = 5;
 
 export default (particles) => {
+  const clean = () => {
+    particles.children.forEach((particle) => {
+      gsap.killTweensOf(particle.position);
+    });
+  };
+
   const isOut = (vector) => (
     Math.abs(vector.x) > maxX || Math.abs(vector.y) > maxY
   );
@@ -39,4 +45,6 @@ export default (particles) => {
   };
 
   particles.children.forEach((particle) => { setTween(particle); });
+
+  return clean;
 };

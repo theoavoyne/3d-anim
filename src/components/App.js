@@ -20,6 +20,7 @@ const Button = styled.button.attrs(() => ({
   text-decoration: underline;
   transform: translateX(-50%);
   white-space: nowrap;
+  &:focus { outline: none; }
 `;
 
 const Canvas = styled.canvas`
@@ -78,11 +79,12 @@ const ProgressBarContainer = styled.div`
 
 const App = () => {
   const canvasRef = useRef();
+  const onClickRef = useRef();
 
   const [percent, setPercent] = useState(0);
   const [step, setStep] = useState(1);
 
-  useAnim(canvasRef, setPercent, setStep);
+  useAnim(canvasRef, onClickRef, setPercent, setStep);
 
   return (
     <React.Fragment>
@@ -96,7 +98,9 @@ const App = () => {
           </ProgressBarContainer>
         </React.Fragment>
       )}
-      {step === 2 && <Button>Enter the website</Button>}
+      {step === 2 && (
+        <Button onClick={onClickRef.current}>Enter the website</Button>
+      )}
     </React.Fragment>
   );
 };

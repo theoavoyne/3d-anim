@@ -6,17 +6,21 @@ const tweenDuration = 6;
 
 export default (args) => {
   const {
+    cameraRotationMM,
     door,
     fragments,
     handlers,
-    newHandlers,
     particles,
+    particlesMovementCleanUp,
     rock,
     scene,
     setStep,
+    updateFragsRotation,
   } = args;
 
   return () => {
+    setStep(2);
+
     const fromDistance = rock.geometry.parameters.radius * rock.scale.x;
 
     fragments.children.forEach((fragment) => {
@@ -41,11 +45,17 @@ export default (args) => {
 
     fragments.userData.rotationAxis = rock.userData.rotationAxis;
 
-    scene.add(door);
-    scene.add(fragments);
+    handlers.MD = [];
+    handlers.MM = [cameraRotationMM];
+    handlers.MU = [];
+    handlers.updaters = [updateFragsRotation];
+
     scene.remove(particles);
     scene.remove(rock);
-    Object.assign(handlers, newHandlers);
-    setStep(2);
+
+    particlesMovementCleanUp();
+
+    scene.add(door);
+    scene.add(fragments);
   };
 };
