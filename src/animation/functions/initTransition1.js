@@ -13,7 +13,6 @@ export default (args) => {
     facesDispMU,
     handlers,
     light,
-    particles,
     progressMD,
     progressMU,
     rock,
@@ -48,7 +47,6 @@ export default (args) => {
     });
 
     scene.add(light);
-    scene.add(particles);
     scene.add(rock);
   };
 };

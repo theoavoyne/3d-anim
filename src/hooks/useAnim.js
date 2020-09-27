@@ -19,6 +19,7 @@ import initParticlesMovement from '../animation/functions/initParticlesMovement'
 import initProgress from '../animation/functions/initProgress';
 import initRockRotation from '../animation/functions/initRockRotation';
 import initRockScale from '../animation/functions/initRockScale';
+import initTransition0 from '../animation/functions/initTransition0';
 import initTransition1 from '../animation/functions/initTransition1';
 import initTransition2 from '../animation/functions/initTransition2';
 import initTransition3 from '../animation/functions/initTransition3';
@@ -37,7 +38,7 @@ export default (...args) => {
     const door = createDoor();
     const fragments = createFragments();
     const light = createLight();
-    const particles = createParticles();
+    const [particles, particlesMaterials] = createParticles();
     const raycaster = createRaycaster();
     const renderer = createRenderer(canvasRef.current);
     const [rock, initialVertices] = createRock();
@@ -94,6 +95,14 @@ export default (...args) => {
 
     // TRANSITIONS
 
+    const transition0 = initTransition0({
+      cameraRotationMM,
+      handlers,
+      particles,
+      particlesMaterials,
+      scene,
+    });
+
     const transition1 = initTransition1({
       cameraRotationMM,
       facesDispMD,
@@ -101,7 +110,6 @@ export default (...args) => {
       facesDispMU,
       handlers,
       light,
-      particles,
       progressMD,
       progressMU,
       rock,
@@ -158,5 +166,7 @@ export default (...args) => {
     };
 
     animate(0);
+
+    transition0();
   }, []);
 };

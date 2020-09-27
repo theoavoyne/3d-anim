@@ -56,5 +56,5 @@ export default () => {
     particles.add(particle);
   }
 
-  return particles;
+  return [particles, materials];
 };
