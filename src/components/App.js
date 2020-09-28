@@ -59,7 +59,7 @@ const Percent = styled.div.attrs(({ percent }) => ({
   font-family: base-mono-wide;
   font-size: 1.25rem;
   font-weight: 300;
-  opacity: ${({ percent }) => (percent > 1 ? 1 : 0)};
+  opacity: ${({ percent }) => (percent < 5 ? 0 : 1)};
   position: absolute;
   top: -.5rem;
   transform: translate(50%, -100%);
@@ -72,8 +72,10 @@ const ProgressBar = styled.div.attrs(({ percent }) => ({
   background: blue;
   bottom: 0;
   left: 0;
+  opacity: ${({ percent }) => (percent < 5 ? 0 : 1)};
   position: absolute;
   top: 0;
+  transition: opacity .3s;
 `;
 
 const ProgressBarContainer = styled.div`
@@ -131,7 +133,7 @@ const App = () => {
       )}
       {step === 1 && (
         <React.Fragment>
-          <Instruction show={percent < 1}>Tap and hold</Instruction>
+          <Instruction show={percent < 5}>Tap and hold</Instruction>
           <ProgressBarContainer>
             <ProgressBar percent={percent} />
             <Percent percent={percent}>{Math.floor(percent)}%</Percent>
