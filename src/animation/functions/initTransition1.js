@@ -21,6 +21,8 @@ export default (args) => {
     progressMD,
     progressMU,
     rock,
+    rockOpacityMD,
+    rockOpacityMU,
     rockRotationMD,
     rockRotationMM,
     rockRotationMU,
@@ -46,9 +48,9 @@ export default (args) => {
         z: 0,
       },
     ).then(() => {
-      handlers.MD = [facesDispMD, progressMD, rockRotationMD, rockScaleMD];
+      handlers.MD = [facesDispMD, progressMD, rockOpacityMD, rockRotationMD, rockScaleMD];
       handlers.MM = [cameraRotationMM, facesDispMM, rockRotationMM];
-      handlers.MU = [facesDispMU, progressMU, rockRotationMU, rockScaleMU];
+      handlers.MU = [facesDispMU, progressMU, rockOpacityMU, rockRotationMU, rockScaleMU];
     });
 
     scene.add(light);

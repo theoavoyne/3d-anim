@@ -17,6 +17,7 @@ import initFragsRotation from '../animation/functions/initFragsRotation';
 import initListeners from '../animation/functions/initListeners';
 import initParticlesMovement from '../animation/functions/initParticlesMovement';
 import initProgress from '../animation/functions/initProgress';
+import initRockOpacity from '../animation/functions/initRockOpacity';
 import initRockRotation from '../animation/functions/initRockRotation';
 import initRockScale from '../animation/functions/initRockScale';
 import initTransition0 from '../animation/functions/initTransition0';
@@ -73,6 +74,11 @@ export default (...args) => {
     } = initProgress(setPercent, transition2Ref);
 
     const {
+      MD: rockOpacityMD,
+      MU: rockOpacityMU,
+    } = initRockOpacity(rock);
+
+    const {
       MD: rockRotationMD,
       MM: rockRotationMM,
       MU: rockRotationMU,
@@ -116,6 +122,8 @@ export default (...args) => {
       progressMD,
       progressMU,
       rock,
+      rockOpacityMD,
+      rockOpacityMU,
       rockRotationMD,
       rockRotationMM,
       rockRotationMU,
