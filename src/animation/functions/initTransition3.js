@@ -19,10 +19,12 @@ export default (args) => {
 
   return () => {
     setStep(3);
+    handlers.DO = [];
     handlers.MM = [];
     gsap.to(camera.position, {
       duration: tweenCameraDuration,
       ease: Power2.easeIn,
+      x: 0,
       z: 1,
     }).then(() => {
       scene.remove(fragments);

@@ -2,9 +2,17 @@
 
 import { Vector2 } from 'three';
 
-const touchDevice = 'ontouchstart' in window;
+export const touchDevice = 'ontouchstart' in window;
 
-export default ({ camera, canvasRef, handlers, raycaster, scene }) => {
+export default (args) => {
+  const {
+    camera,
+    canvasRef,
+    handlers,
+    raycaster,
+    scene,
+  } = args;
+
   let mouseDown = false;
 
   const getIntersect = (clientX, clientY) => {
@@ -15,6 +23,10 @@ export default ({ camera, canvasRef, handlers, raycaster, scene }) => {
     const intersects = raycaster.intersectObjects(scene.children);
 
     return intersects[intersects.length - 1];
+  };
+
+  const onDeviceOrientation = (e) => {
+    handlers.DO.forEach((func) => { func(e); });
   };
 
   const onMouseDown = (e) => {
@@ -66,15 +78,19 @@ export default ({ camera, canvasRef, handlers, raycaster, scene }) => {
     canvasRef.current.addEventListener('mouseup', onMouseUp);
   }
 
-  return () => {
-    if (touchDevice) {
-      canvasRef.current.removeEventListener('touchstart', onMouseDown);
-      canvasRef.current.removeEventListener('touchmove', onMouseMove);
-      canvasRef.current.removeEventListener('touchend', onMouseUp);
-    } else {
-      canvasRef.current.removeEventListener('mousedown', onMouseDown);
-      canvasRef.current.removeEventListener('mousemove', onMouseMove);
-      canvasRef.current.removeEventListener('mouseup', onMouseUp);
-    }
-  };
+  return [
+    onDeviceOrientation,
+    () => {
+      if (touchDevice) {
+        window.removeEventListener('deviceorientation', onDeviceOrientation);
+        canvasRef.current.removeEventListener('touchstart', onMouseDown);
+        canvasRef.current.removeEventListener('touchmove', onMouseMove);
+        canvasRef.current.removeEventListener('touchend', onMouseUp);
+      } else {
+        canvasRef.current.removeEventListener('mousedown', onMouseDown);
+        canvasRef.current.removeEventListener('mousemove', onMouseMove);
+        canvasRef.current.removeEventListener('mouseup', onMouseUp);
+      }
+    },
+  ];
 };

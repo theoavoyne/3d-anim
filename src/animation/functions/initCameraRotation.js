@@ -15,23 +15,32 @@ export { maxAngle, maxX, maxZ };
 export default (camera) => {
   let tween;
 
+  const rotate = (factor) => {
+    if (tween) { tween.kill(); }
+    tween = gsap.to(camera.position, {
+      duration: tweenDuration,
+      onComplete: () => { tween = undefined; },
+      onUpdate: () => {
+        const z = Math.sqrt(cameraPosition[2] ** 2 - camera.position.x ** 2);
+        camera.position.setZ(z);
+        camera.lookAt(0, 0, 0);
+      },
+      x: Math.sin(factor * maxAngle) * cameraPosition[2],
+    });
+  };
+
+  const DO = throttle(({ gamma }) => {
+    const factor = Math.sign(gamma) * Math.abs(gamma / 90) ** (1 / 2);
+    rotate(factor);
+  }, throttleWait);
+
   const MM = throttle((_, mouseDown, e) => {
     if (e.type === 'mousemove') {
       const { clientX } = e;
       const factor = ((clientX / window.innerWidth) * 2) - 1;
-      if (tween) { tween.kill(); }
-      tween = gsap.to(camera.position, {
-        duration: tweenDuration,
-        onComplete: () => { tween = undefined; },
-        onUpdate: () => {
-          const z = Math.sqrt(cameraPosition[2] ** 2 - camera.position.x ** 2);
-          camera.position.setZ(z);
-          camera.lookAt(0, 0, 0);
-        },
-        x: Math.sin(factor * maxAngle) * cameraPosition[2],
-      });
+      rotate(factor);
     }
   }, throttleWait);
 
-  return { MM };
+  return { DO, MM };
 };

@@ -45,12 +45,13 @@ export default (...args) => {
     const scene = createScene();
 
     const didCancelRef = { current: false };
-    const handlers = { MD: [], MM: [], MU: [], updaters: [] };
+    const handlers = { DO: [], MD: [], MM: [], MU: [], updaters: [] };
     const transition2Ref = {};
 
     // EVENT HANDLERS & UPDATERS
 
     const {
+      DO: cameraRotationDO,
       MM: cameraRotationMM,
     } = initCameraRotation(camera);
 
@@ -85,7 +86,7 @@ export default (...args) => {
 
     // EVENT LISTENERS
 
-    const listenersCleanUp = initListeners({
+    const [onDeviceOrientation, listenersCleanUp] = initListeners({
       camera,
       canvasRef,
       handlers,
@@ -104,12 +105,14 @@ export default (...args) => {
     });
 
     const transition1 = initTransition1({
+      cameraRotationDO,
       cameraRotationMM,
       facesDispMD,
       facesDispMM,
       facesDispMU,
       handlers,
       light,
+      onDeviceOrientation,
       progressMD,
       progressMU,
       rock,
