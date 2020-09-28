@@ -34,23 +34,6 @@ export default (args) => {
   return () => {
     setStep(1);
 
-    if (touchDevice && window.DeviceOrientationEvent) {
-      let promise;
-
-      if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-        promise = DeviceOrientationEvent.requestPermission();
-      } else {
-        promise = Promise.resolve('granted');
-      }
-
-      promise.then((permissionState) => {
-        if ((permissionState) === 'granted') {
-          handlers.DO = [cameraRotationDO];
-          window.addEventListener('deviceorientation', onDeviceOrientation);
-        }
-      });
-    }
-
     handlers.updaters = [updateRockRotation];
 
     gsap.fromTo(
@@ -70,5 +53,22 @@ export default (args) => {
 
     scene.add(light);
     scene.add(rock);
+
+    if (touchDevice && window.DeviceOrientationEvent) {
+      let promise;
+
+      if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+        promise = DeviceOrientationEvent.requestPermission();
+      } else {
+        promise = Promise.resolve('granted');
+      }
+
+      promise.then((permissionState) => {
+        if ((permissionState) === 'granted') {
+          handlers.DO = [cameraRotationDO];
+          window.addEventListener('deviceorientation', onDeviceOrientation);
+        }
+      });
+    }
   };
 };
