@@ -7,24 +7,21 @@ export default (args) => {
     cameraRotationMM,
     handlers,
     particles,
-    particlesMaterials,
     scene,
   } = args;
 
   return () => {
     handlers.MM = [cameraRotationMM];
 
-    particlesMaterials.forEach((material) => {
-      gsap.fromTo(
-        material,
-        { opacity: 0 },
-        {
-          duration: tweenDuration,
-          ease: 'none',
-          opacity: 1,
-        },
-      );
-    });
+    gsap.fromTo(
+      particles.children[0].material,
+      { opacity: 0 },
+      {
+        duration: tweenDuration,
+        ease: 'none',
+        opacity: 1,
+      },
+    );
 
     scene.add(particles);
   };

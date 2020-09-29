@@ -1,7 +1,7 @@
 import { gsap, Power2 } from 'gsap';
 
 const tweenCameraDuration = 3;
-const tweenDoorDelay = 1.5;
+const tweenDoorDelay = 0.5;
 const tweenDoorDuration = 0.5;
 
 export default (args) => {

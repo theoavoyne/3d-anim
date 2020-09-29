@@ -39,7 +39,7 @@ export default (...args) => {
     const door = createDoor();
     const fragments = createFragments();
     const light = createLight();
-    const [particles, particlesMaterials] = createParticles();
+    const particles = createParticles();
     const raycaster = createRaycaster();
     const renderer = createRenderer(canvasRef.current);
     const [rock, initialVertices] = createRock();
@@ -106,7 +106,6 @@ export default (...args) => {
       cameraRotationMM,
       handlers,
       particles,
-      particlesMaterials,
       scene,
     });
 

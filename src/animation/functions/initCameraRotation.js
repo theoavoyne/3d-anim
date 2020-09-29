@@ -3,7 +3,7 @@ import throttle from 'lodash.throttle';
 
 import { position as cameraPosition } from '../objects/createCamera';
 
-const maxAngle = Math.PI / 16;
+const maxAngle = Math.PI / 12;
 const throttleWait = 50;
 const tweenDuration = 1;
 

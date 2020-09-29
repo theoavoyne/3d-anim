@@ -1,7 +1,7 @@
 import { Expo, gsap } from 'gsap';
 
 const tweenDurationDown = 2;
-const tweenDurationUp = 4;
+const tweenDurationUp = 4.5;
 
 export default (setPercent, transition2Ref) => {
   const progress = { current: 0 };

@@ -2,7 +2,7 @@ import { Sprite, SpriteMaterial, TextureLoader } from 'three';
 
 import DoorPNG from '../../static/images/door.png';
 
-const scale = 156;
+const scale = 175;
 
 export default () => {
   const material = new SpriteMaterial({

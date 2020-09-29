@@ -1,9 +1,9 @@
 import { Expo, gsap, Power1 } from 'gsap';
 
-const scaleMax = 1.6;
+const scaleMax = 1.7;
 const scaleMin = 1;
 const tweenDurationDown = 2;
-const tweenDurationUp = 4;
+const tweenDurationUp = 4.5;
 
 export default (rock) => {
   let tween;
