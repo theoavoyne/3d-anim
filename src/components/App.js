@@ -5,9 +5,9 @@ import { touchDevice } from '../animation/functions/initListeners';
 import { wait as t1Wait } from '../animation/functions/initTransition1';
 import useAnim from '../hooks/useAnim';
 
-const fadeIn = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
+const appear = keyframes`
+  from { visibility: hidden; }
+  to { visibility: visible; }
 `;
 
 const Canvas = styled.canvas`
@@ -18,9 +18,8 @@ const Canvas = styled.canvas`
 
 const Instruction = styled.div`
   animation-delay: ${t1Wait}s;
-  animation-duration: .3s;
-  animation-fill-mode: backwards;
-  animation-name: ${fadeIn};
+  animation-fill-mode: both;
+  animation-name: ${appear};
   bottom: 6rem;
   color: blue;
   font-family: base-mono-wide;
@@ -37,9 +36,8 @@ const LinkLikeButton = styled.button.attrs(() => ({
   type: 'button',
 }))`
   animation-delay: 2s;
-  animation-duration: .3s;
-  animation-fill-mode: backwards;
-  animation-name: ${fadeIn};
+  animation-fill-mode: both;
+  animation-name: ${appear};
   background: none;
   border: none;
   bottom: 6rem;
@@ -85,9 +83,8 @@ const ProgressBar = styled.div.attrs(({ percent }) => ({
 
 const ProgressBarContainer = styled.div`
   animation-delay: ${t1Wait}s;
-  animation-duration: .3s;
-  animation-fill-mode: backwards;
-  animation-name: ${fadeIn};
+  animation-fill-mode: both;
+  animation-name: ${appear};
   background: #E0E0E0;
   bottom: 3rem;
   height: 4px;
