@@ -36,6 +36,9 @@ export default (args) => {
   return () => {
     setStep(1);
 
+    handlers.MD = [facesDispMD, progressMD, rockOpacityMD, rockRotationMD, rockScaleMD];
+    handlers.MM = [cameraRotationMM, facesDispMM, rockRotationMM];
+    handlers.MU = [facesDispMU, progressMU, rockOpacityMU, rockRotationMU, rockScaleMU];
     handlers.updaters = [updateRockRotation];
 
     gsap.fromTo(
@@ -47,11 +50,7 @@ export default (args) => {
         ease: Power2.easeOut,
         z: 0,
       },
-    ).then(() => {
-      handlers.MD = [facesDispMD, progressMD, rockOpacityMD, rockRotationMD, rockScaleMD];
-      handlers.MM = [cameraRotationMM, facesDispMM, rockRotationMM];
-      handlers.MU = [facesDispMU, progressMU, rockOpacityMU, rockRotationMU, rockScaleMU];
-    });
+    );
 
     scene.add(light);
     scene.add(rock);

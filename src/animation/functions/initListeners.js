@@ -1,5 +1,6 @@
 /* eslint-disable object-curly-newline */
 
+import debounce from 'lodash.debounce';
 import { Vector2 } from 'three';
 
 export const touchDevice = 'ontouchstart' in window;
@@ -9,6 +10,7 @@ export default (args) => {
     camera,
     canvasRef,
     handlers,
+    renderer,
     raycaster,
     scene,
   } = args;
@@ -68,6 +70,18 @@ export default (args) => {
     handlers.MU.forEach((func) => { func(intersect, e); });
   };
 
+  const onResize = debounce(
+    () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    },
+    150,
+  );
+
+  window.addEventListener('resize', onResize);
+  window.addEventListener('orientationchange', onResize);
+
   if (touchDevice) {
     canvasRef.current.addEventListener('touchstart', onMouseDown, { passive: false });
     canvasRef.current.addEventListener('touchmove', onMouseMove);
@@ -81,6 +95,9 @@ export default (args) => {
   return [
     onDeviceOrientation,
     () => {
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('orientationchange', onResize);
+
       if (touchDevice) {
         window.removeEventListener('deviceorientation', onDeviceOrientation);
         canvasRef.current.removeEventListener('touchstart', onMouseDown);

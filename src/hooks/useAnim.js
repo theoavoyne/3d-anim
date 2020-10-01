@@ -14,7 +14,7 @@ import createScene from '../animation/objects/createScene';
 import initCameraRotation from '../animation/functions/initCameraRotation';
 import initFacesDisp from '../animation/functions/initFacesDisp';
 import initFragsRotation from '../animation/functions/initFragsRotation';
-import initListeners from '../animation/functions/initListeners';
+import initListeners, { touchDevice } from '../animation/functions/initListeners';
 import initParticlesMovement from '../animation/functions/initParticlesMovement';
 import initProgress from '../animation/functions/initProgress';
 import initRockOpacity from '../animation/functions/initRockOpacity';
@@ -96,6 +96,7 @@ export default (...args) => {
       camera,
       canvasRef,
       handlers,
+      renderer,
       raycaster,
       scene,
     });
@@ -178,5 +179,7 @@ export default (...args) => {
     animate(0);
 
     transition0();
+
+    if (!touchDevice) { transition1(); }
   }, []);
 };

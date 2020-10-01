@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
+import { touchDevice } from '../animation/functions/initListeners';
 import { wait as t1Wait } from '../animation/functions/initTransition1';
 import useAnim from '../hooks/useAnim';
 
@@ -35,6 +36,10 @@ const Instruction = styled.div`
 const LinkLikeButton = styled.button.attrs(() => ({
   type: 'button',
 }))`
+  animation-delay: 2s;
+  animation-duration: .3s;
+  animation-fill-mode: backwards;
+  animation-name: ${fadeIn};
   background: none;
   border: none;
   bottom: 6rem;
@@ -119,7 +124,7 @@ const App = () => {
   const onClickExitRef = useRef();
 
   const [percent, setPercent] = useState(0);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(touchDevice ? 0 : 1);
 
   useAnim(canvasRef, onClickBeginRef, onClickExitRef, setPercent, setStep);
 
