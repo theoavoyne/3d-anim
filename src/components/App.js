@@ -10,6 +10,11 @@ const appear = keyframes`
   to { visibility: visible; }
 `;
 
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
 const Canvas = styled.canvas`
   left: 0;
   position: absolute;
@@ -36,8 +41,9 @@ const LinkLikeButton = styled.button.attrs(() => ({
   type: 'button',
 }))`
   animation-delay: 2s;
+  animation-duration: 0.5s;
   animation-fill-mode: both;
-  animation-name: ${appear};
+  animation-name: ${fadeIn};
   background: none;
   border: none;
   bottom: 6rem;
